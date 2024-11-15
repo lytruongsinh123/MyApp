@@ -6,8 +6,7 @@ const Footer = () => {
     <footer>
       <p>&copy; 2024 Your Company. All rights reserved.</p>
       <p>
-        <a href="#about">About Us</a> | <a href="#contact">Contact</a> |
-        <a href="#privacy">Privacy Policy</a>
+        <a href="https://www.facebook.com/profile.php?id=100038168222977">About Us</a> 
       </p>
     </footer>
   );
