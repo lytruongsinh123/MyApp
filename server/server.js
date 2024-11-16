@@ -10,14 +10,18 @@ const commentRoutes = require("./routers/comment");
 
 const app = express();
 const PORT = process.env.PORT || 8000;
+require("dotenv").config(); 
 
-mongoose
-  .connect("mongodb://localhost/nodejs", {
+// Kết nối MongoDB
+mongoose.connect(
+  process.env.MONGODB_URI || "mongodb://localhost/nodejs", 
+  {
     useNewUrlParser: true,
     useUnifiedTopology: true,
-  })
-  .then(() => console.log("MongoDB connected"))
-  .catch((err) => console.error("MongoDB connection error:", err));
+  }
+)
+  .then(() => console.log("Connected to MongoDB"))
+  .catch((err) => console.error("Failed to connect MongoDB:", err));
 
 // Middleware
 app.use(
@@ -36,10 +40,10 @@ app.use(
     secret: "yourSecretKey", // Khóa bí mật để mã hóa phiên
     resave: false,
     saveUninitialized: false,
-    store: new MongoStore({
-      mongoUrl: "mongodb://localhost/nodejs", // URI cho MongoDB
+    store: MongoStore.create({
+      mongoUrl: process.env.MONGODB_URI || "mongodb://localhost/nodejs", // URI cho MongoDB
       collectionName: "sessions", // Tên collection lưu trữ phiên
-    }), // Lưu phiên trong MongoDB
+    }),
     cookie: {
       maxAge: 180 * 60 * 1000, // Thời gian sống của cookie (180 phút)
       secure: false, // Đặt true nếu sử dụng HTTPS
