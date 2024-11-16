@@ -1,4 +1,4 @@
-import React, {useCallback, useContext, useEffect, useState } from "react";
+import React, { useCallback, useContext, useEffect, useState } from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
 import { AuthContext } from "../AuthContext";
@@ -43,10 +43,6 @@ const DetailPost = () => {
     return sortedBlogs.slice(0, 5);
   };
 
-  
-
-  
-
   const addComment = async (postId) => {
     const newComment = {
       postId,
@@ -54,7 +50,10 @@ const DetailPost = () => {
       author: user.username,
       image: user.image,
     };
-    await axios.post(`http://localhost:8000/api/comments/${postId}/add-comment`, newComment);
+    await axios.post(
+      `http://localhost:8000/api/comments/${postId}/add-comment`,
+      newComment
+    );
     setContent("");
     fetchData();
   };
@@ -210,7 +209,12 @@ const DetailPost = () => {
                   <div>{new Date(post.createdAt).toLocaleString()}</div>
                 </div>
                 <div className="like">
-                  <Like postId={post._id} initialLikes={post.people_likes.length} isLoggedIn={isLoggedIn}  userId={user._id}/>
+                  <Like
+                    postId={post._id}
+                    initialLikes={post.people_likes.length}
+                    isLoggedIn={isLoggedIn}
+                    userId={isLoggedIn ? user._id : null}
+                  />
                 </div>
               </div>
               <hr />
@@ -227,14 +231,14 @@ const DetailPost = () => {
               {isLoggedIn ? (
                 <div className="comment-form">
                   <div className="comment-avatar">
-                  {user && user.image ? (
-                    <img src={user.image} alt="" /> // Hiển thị avatar
-                  ) : (
-                    <i
-                      className="bi bi-person-circle"
-                      style={{ fontSize: "60px" }}
-                    ></i>
-                  )}
+                    {user && user.image ? (
+                      <img src={user.image} alt="" /> // Hiển thị avatar
+                    ) : (
+                      <i
+                        className="bi bi-person-circle"
+                        style={{ fontSize: "60px" }}
+                      ></i>
+                    )}
                     <p>{user.username}</p>
                   </div>
                   <div className="comment-input">
@@ -250,7 +254,14 @@ const DetailPost = () => {
                   </div>
                 </div>
               ) : (
-                <div className="comment-form" style={{display: "flex", justifyContent: "center", alignItems: "center"}}>
+                <div
+                  className="comment-form"
+                  style={{
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+                >
                   <p>
                     You need to log in to add a comment.{" "}
                     <Link to="/login">Log in</Link>
