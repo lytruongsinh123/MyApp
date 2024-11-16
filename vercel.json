@@ -2,25 +2,29 @@
   "version": 2,
   "builds": [
     {
+      "src": "server/server.js",
+      "use": "@vercel/node"
+    },
+    {
       "src": "client/package.json",
       "use": "@vercel/static-build",
       "config": {
         "buildCommand": "cd client && npm run build",
         "outputDirectory": "client/build"
       }
-    },
-    {
-      "src": "server/server.js",
-      "use": "@vercel/node"
     }
   ],
   "routes": [
     {
-      "src": "/(.*)",
+      "src": "/images/(.*)", 
+      "dest": "/server/server.js" 
+    },
+    {
+      "src": "/(auth|home|comments)(.*)", 
       "dest": "/server/server.js"
     },
     {
-      "src": "/(.*)",
+      "src": "/(.*)", 
       "dest": "/client/build/$1"
     }
   ]
