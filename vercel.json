@@ -5,7 +5,8 @@
       "src": "client/package.json",
       "use": "@vercel/static-build",
       "config": {
-        "outputDirectory": "build"
+        "buildCommand": "cd client && npm run build",
+        "outputDirectory": "client/build"
       }
     },
     {
@@ -15,12 +16,12 @@
   ],
   "routes": [
     {
-      "src": "/api/(.*)",  
-      "dest": "/server/server.js" 
+      "src": "/(.*)",
+      "dest": "/server/server.js"
     },
     {
       "src": "/(.*)",
-      "dest": "/client/build/$1"  
+      "dest": "/client/build/$1"
     }
   ]
 }
