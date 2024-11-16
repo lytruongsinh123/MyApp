@@ -1,7 +1,4 @@
 const express = require("express");
-const cors = require("cors");
-const bodyParser = require("body-parser");
-const multer = require("multer");
 const AccountModel = require("../models/Account.js");
 const upload = require("../config/multer");
 const router = express.Router();

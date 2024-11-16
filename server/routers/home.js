@@ -3,7 +3,6 @@ const cors = require("cors");
 const BlogModel = require("../models/blog.js");
 const upload = require("../config/multer.js");
 const router = express.Router();
-const CommentModel = require("../models/comment");
 router.get("/home", (req, res, next) => {
   res.json({ message: "Welcome to the Home Page!" });
 });
