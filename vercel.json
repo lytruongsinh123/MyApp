@@ -20,7 +20,7 @@
       "dest": "/server/server.js" 
     },
     {
-      "src": "/(auth|home|comments)(.*)", 
+      "src": "/api/(.*)", 
       "dest": "/server/server.js"
     },
     {

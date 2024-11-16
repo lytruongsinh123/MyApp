@@ -15,7 +15,7 @@ const Register = () => {
     console.log("Sending data:", { username, password, email });
 
     try {
-      const response = await axios.post("http://localhost:8000/register", {
+      const response = await axios.post("http://localhost:8000/api/auth/register", {
         username,
         password,
         email,

@@ -11,7 +11,7 @@ const PostUpdate = () => {
     // Handle the update request
     const handleUpdate = async () => {
         try {
-            const response = await axios.put(`http://localhost:8000/update/${id}`, {
+            const response = await axios.put(`http://localhost:8000/api/home/update/${id}`, {
                 newTitle,
                 newContent
             });

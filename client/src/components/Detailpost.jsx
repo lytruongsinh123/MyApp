@@ -18,8 +18,8 @@ const DetailPost = () => {
   const fetchData = useCallback(async () => {
     try {
       const [postResponse, blogsResponse] = await Promise.all([
-        axios.get(`http://localhost:8000/detail/post/${id}`),
-        axios.get("http://localhost:8000/bloglist"),
+        axios.get(`http://localhost:8000/api/home/detail/post/${id}`),
+        axios.get("http://localhost:8000/api/home/bloglist"),
       ]);
 
       setPost(postResponse.data);
@@ -54,7 +54,7 @@ const DetailPost = () => {
       author: user.username,
       image: user.image,
     };
-    await axios.post(`http://localhost:8000/${postId}/add-comment`, newComment);
+    await axios.post(`http://localhost:8000/api/comments/${postId}/add-comment`, newComment);
     setContent("");
     fetchData();
   };
@@ -68,7 +68,7 @@ const DetailPost = () => {
         image: user.image,
       };
       await axios.post(
-        `http://localhost:8000/${id}/add-reply/${commentId}`,
+        `http://localhost:8000/api/comments/${id}/add-reply/${commentId}`,
         newReply
       );
 

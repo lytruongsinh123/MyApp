@@ -40,7 +40,7 @@ function NewBlogForm() {
       });
 
       const response = await axios.post(
-        "http://localhost:8000/postblog",
+        "http://localhost:8000/api/home/postblog",
         formData,
         {
           headers: {
