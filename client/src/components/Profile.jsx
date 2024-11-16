@@ -13,16 +13,16 @@ const Profile = ({ post }) => {
       <h2>{post.author ? post.author.username : "N/A"}</h2>
       <p>{post.author ? post.author.jobs : "N/A"}</p>
       <div className="card1_social">
-        <a href="#">
+        <a href="https://github.com/lytruongsinh123">
           <i className="bi bi-github"></i>
         </a>
-        <a href="#">
+        <a href="https://www.facebook.com/profile.php?id=100038168222977">
           <i className="bi bi-facebook"></i>
         </a>
-        <a href="#">
+        <a href="https://www.google.com/?authuser=0">
           <i className="bi bi-google"></i>
         </a>
-        <a href="#">
+        <a href="https://www.youtube.com/@duongdiep4813">
           <i className="bi bi-youtube"></i>
         </a>
       </div>
