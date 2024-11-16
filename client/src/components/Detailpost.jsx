@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, {useCallback, useContext, useEffect, useState } from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
 import { AuthContext } from "../AuthContext";
@@ -15,23 +15,23 @@ const DetailPost = () => {
   const { isLoggedIn, user } = useContext(AuthContext);
 
   // Fetch tất cả bài viết để lấy 5 bài viết sớm nhất
-  const fetchData = async () => {
+  const fetchData = useCallback(async () => {
     try {
       const [postResponse, blogsResponse] = await Promise.all([
         axios.get(`http://localhost:8000/detail/post/${id}`),
         axios.get("http://localhost:8000/bloglist"),
       ]);
-  
+
       setPost(postResponse.data);
       setBlogs(blogsResponse.data);
     } catch (error) {
       console.error("Error fetching data:", error);
     }
-  };
+  }, [id]); // Phụ thuộc vào `id`
 
   useEffect(() => {
     fetchData();
-  }, [id]);
+  }, [fetchData]);
 
   // Lấy 5 bài viết sớm nhất
   const getEarliestBlogs = () => {

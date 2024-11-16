@@ -141,7 +141,7 @@ function BlogList() {
             {groupedBlogs[groupKey].map((blog) => (
               <div key={blog._id} className="bloglist">
                 <div className="bloglist-image">
-                  <img src={blog.image} alt="blog image" />
+                  <img src={blog.image} alt="blog" />
                 </div>
 
                 <div className="bloglist-content">

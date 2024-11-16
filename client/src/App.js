@@ -20,7 +20,6 @@ import Detailpost from "./components/Detailpost";
 import SearchResult from "./components/Searchresult";
 import Porfolio from "./components/Portfolio";
 import { AuthProvider } from "./AuthContext";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "./styles/style.css";
 import "./styles/porfolio.css";
 import "./styles/update.css";
