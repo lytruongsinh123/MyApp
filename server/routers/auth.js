@@ -1,5 +1,5 @@
 const express = require("express");
-const AccountModel = require("../models/Account.js");
+const AccountModel = require("../models/account.js");
 const upload = require("../config/multer");
 const router = express.Router();
 
