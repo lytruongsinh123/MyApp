@@ -4,25 +4,14 @@ import { Carousel } from "react-bootstrap";
 import Postcard from "./Postcard";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.min.js";
-function Home({ posts }) {
-  const [data, setData] = useState([]);
 
-  useEffect(() => {
-    // Sort posts by date (assuming each post has a `date` field)
-    const sortedPosts = posts.sort(
-      (a, b) => new Date(b.date) - new Date(a.date)
-    );
-    // Take the 5 most recent posts
-    const recentPosts = sortedPosts.slice(0, 5);
-    setData(recentPosts);
-  }, [posts]);
-
+function Home() {
   const [blogs, setBlogs] = useState([]);
 
   const fetchBlogs = async () => {
     try {
       const response = await axios.get("http://localhost:8000/bloglist");
-      // Take only the first 5 blogs from the response
+      // Lấy 5 blog mới nhất từ dữ liệu nhận được
       const recentBlogs = response.data.slice(0, 5);
       setBlogs(recentBlogs);
     } catch (error) {
@@ -31,26 +20,24 @@ function Home({ posts }) {
   };
 
   useEffect(() => {
-    fetchBlogs(); // Fetch blog list when the component is mounted
+    fetchBlogs(); // Gọi API khi component được mount
   }, []);
-  
+
   return (
     <div className="center">
-      {/* React Bootstrap Carousel with dynamic content from blogs */}
-
+      {/* React Bootstrap Carousel với nội dung động từ blogs */}
       <Carousel>
         {blogs.map((blog, index) => (
           <Carousel.Item key={index}>
             <img
               className="d-block w-100"
-              src={blog.image} // Dynamically load image from the blog data
-              alt={`Slide ${index + 1}`} // Dynamically set alt text
+              src={blog.image}
+              alt={`Slide ${index + 1}`}
             />
             <Carousel.Caption>
               <h5>
                 <strong style={{ fontSize: "30px" }}>{blog.title}</strong>
-              </h5>{" "}
-              {/* Dynamically load the title */}
+              </h5>
               <p>
                 {blog.content.length > 200
                   ? `${blog.content.substring(0, 200)}...`
@@ -61,7 +48,7 @@ function Home({ posts }) {
         ))}
       </Carousel>
 
-      {/* Postcards Grid */}
+      {/* Hiển thị các Postcard từ blog */}
       <div
         style={{
           width: "100%",
@@ -77,9 +64,9 @@ function Home({ posts }) {
         {blogs.map((blog, index) => (
           <Postcard
             key={index}
-            image={blog.image} // Passing image for each blog
-            title={blog.title} // Passing title for each blog
-            content={blog.content} // Passing content for each blog
+            image={blog.image} // Truyền ảnh cho từng blog
+            title={blog.title} // Truyền tiêu đề
+            content={blog.content} // Truyền nội dung
             id={blog._id}
           />
         ))}
