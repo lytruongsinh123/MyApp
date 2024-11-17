@@ -130,7 +130,7 @@ function UpdateImage() {
             />
           </div>
 
-          <button type="submit" className="submit-btn">Update</button>
+          <button type="submit" className="submit-btn" style={{color: "black"}}>Update</button>
 
           {error && <p className="error-text">{error}</p>}
         </div>
