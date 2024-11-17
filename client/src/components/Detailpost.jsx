@@ -192,7 +192,7 @@ const DetailPost = () => {
               <div className="post-header">
                 <div className="avatar-account" style={{ marginLeft: "0px" }}>
                   {post.image_author ? ( // Kiểm tra nếu có avatar
-                    <img src={post.image_author} alt="" /> // Hiển thị avatar
+                    <img src={post.author.image} alt="" /> // Hiển thị avatar
                   ) : (
                     <img
                       src="/images/360_F_124656969_x3y8YVzvrqFZyv3YLWNo6PJaC88SYxqM.jpg"

@@ -10,7 +10,7 @@ router.post("/register", async (req, res) => {
     if (existingUser) {
       return res.json("Tạo khoản đã tồn tại");
     }
-    await AccountModel.create({ username, password, email });
+    (await AccountModel.create({ username, password, email })).save();
     res.json("Tạo tài khoản thành công");
   } catch (err) {
     res.status(500).json("Tạo tài khoản thất bại");

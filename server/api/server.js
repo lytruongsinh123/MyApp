@@ -4,31 +4,29 @@ const cors = require("cors");
 const session = require("express-session");
 const MongoStore = require("connect-mongo");
 const mongoose = require("mongoose");
-const authRoutes = require("./routers/auth");
-const homeRoutes = require("./routers/home");
-const commentRoutes = require("./routers/comment");
+const authRoutes = require("../routers/auth");
+const homeRoutes = require("../routers/home");
+const commentRoutes = require("../routers/comment");
 
 const app = express();
 const PORT = process.env.PORT || 8000;
-require("dotenv").config(); 
-
-
-app.get('/',(req, res)=> {
-  res.json({message : 'Welcome to backend server'})
-})
-
+require("dotenv").config();
 
 // Kết nối MongoDB
-mongoose.connect(
-  process.env.MONGODB_URI || "mongodb://localhost/nodejs", 
-  {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  }
-)
+mongoose
+  .connect(
+    process.env.MONGODB_URI ||
+      "mongodb+srv://23021410:Sl2jCrBm63EqopFA@cluster0.gq1kc.mongodb.net/Nodejs?retryWrites=true&w=majority&appName=Cluster0",
+    {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+      serverSelectionTimeoutMS: 5000, // Tăng thời gian timeout
+      socketTimeoutMS: 45000,
+    }
+  )
   .then(() => console.log("Connected to MongoDB"))
   .catch((err) => console.error("Failed to connect MongoDB:", err));
-
+  mongoose.set('debug', true);
 // Middleware
 app.use(
   cors({
@@ -47,7 +45,9 @@ app.use(
     resave: false,
     saveUninitialized: false,
     store: MongoStore.create({
-      mongoUrl: process.env.MONGODB_URI || "mongodb://localhost/nodejs", // URI cho MongoDB
+      mongoUrl:
+        process.env.MONGODB_URI ||
+        "mongodb+srv://23021410:Sl2jCrBm63EqopFA@cluster0.gq1kc.mongodb.net/Nodejs?retryWrites=true&w=majority&appName=Cluster0", // URI cho MongoDB
       collectionName: "sessions", // Tên collection lưu trữ phiên
     }),
     cookie: {
@@ -67,6 +67,7 @@ app.use("/api/home", homeRoutes); // Routes chính cho trang chủ
 app.use("/api/comments", commentRoutes); // Routes cho comment
 
 // Khởi động server
+
 app.listen(PORT, () => {
-  console.log(`Server is running on http://localhost:${PORT}`);
+  console.log(`Server is running on port ${PORT}`);
 });

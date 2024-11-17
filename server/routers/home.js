@@ -1,5 +1,4 @@
 const express = require("express");
-const cors = require("cors");
 const BlogModel = require("../models/blog.js");
 const upload = require("../config/multer.js");
 const router = express.Router();
@@ -27,18 +26,21 @@ router.post("/postblog", upload.single("image"), async (req, res, next) => {
   }
 });
 
-router.get("/bloglist", async (req, res, next) => {
-  const { page = 1, limit = 10 } = req.query; // Default to page 1 and 10 items per page
+router.get('/bloglist', async (req, res) => {
+  console.log('Fetching blog list...');  // Log khi gọi API
   try {
-    const blogs = await BlogModel.find()
-      .populate("author")
-      .populate("comments")
-      .skip((page - 1) * limit) // Skip items from previous pages
-      .limit(limit) // Limit the number of results
-      .exec();
-    res.json(blogs);
-  } catch (error) {
-    res.status(500).json({ message: error.message });
+    console.log('Attempting to fetch blogs...');
+    const blogs = await BlogModel.find();
+    console.log('Blogs fetched successfully:', blogs);  // Log kết quả
+
+    if (!blogs) {
+      return res.status(404).json({ message: 'No blogs found' });
+    }
+
+    res.status(200).json(blogs);
+  } catch (err) {
+    console.error('Error fetching blogs:', err);  // Log lỗi đầy đủ
+    res.status(500).json({ message: 'Lỗi server khi lấy blog', error: err.message });
   }
 });
 

@@ -5,7 +5,7 @@ const Profile = ({ post }) => {
     <div className="card1">
       <div className="card1_img">
         {post.image_author ? (
-          <img src={post.image_author} alt="Avatar" />
+          <img src={post.author.image} alt="Avatar" />
         ) : (
           <img src="/images/360_F_124656969_x3y8YVzvrqFZyv3YLWNo6PJaC88SYxqM.jpg" alt="Avatar" />
         )}
