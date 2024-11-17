@@ -26,7 +26,9 @@ function BlogList() {
 
   useEffect(() => {
     axios
-      .get("https://server-nu-gules.vercel.app/api/home/top-like") // Đảm bảo URL là đúng với API bạn đã tạo trong Express
+    const response = await axios.get("https://server-azure-omega.vercel.app/api/home/bloglist", {
+      withCredentials: true, // Đảm bảo gửi cookie
+    });
       .then((response) => {
         console.log(response.data);
         setTopPosts(response.data); // Cập nhật dữ liệu vào state
