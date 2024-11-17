@@ -3,6 +3,7 @@ const cors = require("cors");
 const BlogModel = require("../models/blog.js");
 const upload = require("../config/multer.js");
 const router = express.Router();
+const { getBlogList } = require("../api/home/bloglist.js");
 router.get("/home", (req, res, next) => {
   res.json({ message: "Welcome to the Home Page!" });
 });
@@ -27,13 +28,7 @@ router.post("/postblog", upload.single("image"), async (req, res, next) => {
   }
 });
 
-router.get("/bloglist", async (req, res, next) => {
-  console.log(req.body)
-  const blogs = await BlogModel.find()
-  .populate("author")
-  .populate("comments")
-  res.json(blogs);
-});
+router.get("/bloglist", getBlogList);
 
 router.get("/blogposted", async (req, res, next) => {
   try {
