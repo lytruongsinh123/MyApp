@@ -46,7 +46,7 @@ router.post(
 
     try {
       const userId = req.params.userId;
-      const imagePath = `${req.protocol}://${req.get("host")}/images/${req.file.filename}`;
+      const imagePath = req.file.location;
 
       // Cập nhật thông tin người dùng
       const updatedAccount = await AccountModel.findByIdAndUpdate(

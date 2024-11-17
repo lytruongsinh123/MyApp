@@ -29,7 +29,7 @@ mongoose
   mongoose.set('debug', true);
 // Middleware
 app.use(cors({
-  origin: "https://my-app-nine-liart-13.vercel.app", // Thay bằng domain của client
+  origin: ["https://my-app-nine-liart-13.vercel.app", "http://localhost:3000"],
   methods: ["GET", "POST", 'PUT', 'DELETE'], 
   credentials: true 
 }));
