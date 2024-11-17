@@ -3,7 +3,6 @@ const cors = require("cors");
 const BlogModel = require("../models/blog.js");
 const upload = require("../config/multer.js");
 const router = express.Router();
-const { getBlogList } = require("../api/home/bloglist.js");
 router.get("/home", (req, res, next) => {
   res.json({ message: "Welcome to the Home Page!" });
 });
@@ -28,7 +27,21 @@ router.post("/postblog", upload.single("image"), async (req, res, next) => {
   }
 });
 
-router.get("/bloglist", getBlogList);
+router.get("/bloglist", async (req, res, next) => {
+  const { page = 1, limit = 10 } = req.query; // Default to page 1 and 10 items per page
+  try {
+    const blogs = await BlogModel.find()
+      .populate("author")
+      .populate("comments")
+      .skip((page - 1) * limit) // Skip items from previous pages
+      .limit(limit) // Limit the number of results
+      .exec();
+    res.json(blogs);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
 
 router.get("/blogposted", async (req, res, next) => {
   try {
