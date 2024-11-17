@@ -26,7 +26,7 @@ function BlogList() {
 
   useEffect(() => {
     axios
-    const response = await axios.get("https://server-azure-omega.vercel.app/api/home/bloglist", {
+    .get("https://server-azure-omega.vercel.app/api/home/bloglist", {
       withCredentials: true, // Đảm bảo gửi cookie
     })
       .then((response) => {
