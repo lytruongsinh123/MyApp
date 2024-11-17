@@ -9,7 +9,7 @@ function BlogPosted() {
   const navigate = useNavigate();
   useEffect(() => {
     axios
-      .get("https://server-theta-tan.vercel.app/blogposted")
+      .get("http://localhost:8000/blogposted")
       .then((response) => {
         setBlogs(response.data);
         setLoading(false);
