@@ -9,7 +9,7 @@ function BlogList() {
 
   const fetchBlogs = async () => {
     try {
-      const response = await axios.get("https://server-azure-omega.vercel.app/api/home/bloglist");
+      const response = await axios.get("https://server-azure-omega.vercel.app/bloglist");
       setBlogs(response.data);
     } catch (error) {
       console.error("Error fetching blogs:", error);
@@ -26,7 +26,7 @@ function BlogList() {
 
   useEffect(() => {
     axios
-    .get("https://server-azure-omega.vercel.app/api/home/bloglist", {
+    .get("https://server-azure-omega.vercel.app/bloglist", {
       withCredentials: true, // Đảm bảo gửi cookie
     })
       .then((response) => {

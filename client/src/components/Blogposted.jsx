@@ -25,7 +25,7 @@ function BlogPosted() {
   const handleDelete = async (id) => {
     alert(id);
     try {
-      await axios.delete(`https://server-azure-omega.vercel.app/api/home/postdelete/${id}`);
+      await axios.delete(`https://server-azure-omega.vercel.app/postdelete/${id}`);
       setBlogs(blogs.filter((blog) => blog._id !== id)); // Cập nhật danh sách blogs sau khi xóa
       alert("Bài đăng đã được xóa thành công.");
     } catch (error) {

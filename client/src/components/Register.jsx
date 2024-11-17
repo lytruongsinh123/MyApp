@@ -15,7 +15,7 @@ const Register = () => {
     console.log("Sending data:", { username, password, email });
 
     try {
-      const response = await axios.post("https://server-azure-omega.vercel.app/api/auth/register", {
+      const response = await axios.post("https://server-azure-omega.vercel.app/register", {
         username,
         password,
         email,

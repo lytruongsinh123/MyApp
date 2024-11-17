@@ -18,8 +18,8 @@ const DetailPost = () => {
   const fetchData = useCallback(async () => {
     try {
       const [postResponse, blogsResponse] = await Promise.all([
-        axios.get(`https://server-azure-omega.vercel.app/api/home/detail/post/${id}`),
-        axios.get("https://server-azure-omega.vercel.app/api/home/bloglist"),
+        axios.get(`https://server-azure-omega.vercel.app/detail/post/${id}`),
+        axios.get("https://server-azure-omega.vercel.app/bloglist"),
       ]);
 
       setPost(postResponse.data);
@@ -51,7 +51,7 @@ const DetailPost = () => {
       image: user.image,
     };
     await axios.post(
-      `https://server-azure-omega.vercel.app/api/comments/${postId}/add-comment`,
+      `https://server-azure-omega.vercel.app/${postId}/add-comment`,
       newComment
     );
     setContent("");
@@ -67,7 +67,7 @@ const DetailPost = () => {
         image: user.image,
       };
       await axios.post(
-        `https://server-azure-omega.vercel.app/api/comments/${id}/add-reply/${commentId}`,
+        `https://server-azure-omega.vercel.app/${id}/add-reply/${commentId}`,
         newReply
       );
 

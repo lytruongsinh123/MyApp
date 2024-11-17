@@ -40,7 +40,7 @@ function NewBlogForm() {
       });
 
       const response = await axios.post(
-        `https://server-azure-omega.vercel.app/api/home/postblog`,
+        `https://server-azure-omega.vercel.app/postblog`,
         formData,
         {
           headers: {

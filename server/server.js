@@ -65,9 +65,9 @@ app.use(
 app.use("/images", express.static("public/images")); // Phục vụ hình ảnh từ thư mục public/images
 
 // Định nghĩa các route với prefix
-app.use("/api/auth", authRoutes); // Tất cả routes liên quan đến xác thực
-app.use("/api/home", homeRoutes); // Routes chính cho trang chủ
-app.use("/api/comments", commentRoutes); // Routes cho comment
+app.use("/", authRoutes); // Tất cả routes liên quan đến xác thực
+app.use("/", homeRoutes); // Routes chính cho trang chủ
+app.use("/", commentRoutes); // Routes cho comment
 
 // Khởi động server
 
