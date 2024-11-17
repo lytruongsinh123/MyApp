@@ -28,6 +28,7 @@ router.post("/postblog", upload.single("image"), async (req, res, next) => {
 });
 
 router.get("/bloglist", async (req, res, next) => {
+  console.log(req.body)
   const blogs = await BlogModel.find()
   .populate("author")
   .populate("comments")

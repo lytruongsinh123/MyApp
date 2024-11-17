@@ -12,6 +12,12 @@ const app = express();
 const PORT = process.env.PORT || 8000;
 require("dotenv").config(); 
 
+
+app.get('/',(req, res)=> {
+  res.json({message : 'Welcome to backend server'})
+})
+
+
 // Kết nối MongoDB
 mongoose.connect(
   process.env.MONGODB_URI || "mongodb://localhost/nodejs", 
