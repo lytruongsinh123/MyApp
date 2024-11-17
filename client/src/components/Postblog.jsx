@@ -46,6 +46,7 @@ function NewBlogForm() {
           headers: {
             "Content-Type": "multipart/form-data", // Chỉ định content-type là multipart
           },
+          withCredentials: true,
         }
       );
       navigate("/blog");
