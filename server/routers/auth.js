@@ -37,31 +37,38 @@ router.post(
   "/update-image/:userId",
   upload.single("image"),
   async (req, res) => {
-    const { address, phone , jobs} = req.body
+    const { address, phone, jobs } = req.body;
+
+    // Kiểm tra xem file có được tải lên không
+    if (!req.file) {
+      return res.status(400).json({ error: "No image uploaded" });
+    }
+
     try {
       const userId = req.params.userId;
       const imagePath = `${req.protocol}://${req.get("host")}/images/${req.file.filename}`;
 
+      // Cập nhật thông tin người dùng
       const updatedAccount = await AccountModel.findByIdAndUpdate(
         userId,
-        { address,
-          phone,
-          jobs,
-          image: imagePath },
-        { new: true }
+        { address, phone, jobs, image: imagePath },
+        { new: true } // Đảm bảo trả về tài liệu đã được cập nhật
       );
 
+      // Kiểm tra xem người dùng có tồn tại không
       if (!updatedAccount) {
         return res.status(404).json({ error: "User not found" });
       }
 
+      // Trả về dữ liệu người dùng đã được cập nhật
       res.json(updatedAccount);
     } catch (error) {
-      console.error(error);
+      console.error("Error updating user:", error);
       res.status(500).json({ error: "Something went wrong" });
     }
   }
 );
+
 
 router.get('/check-session', (req, res) => {
   if (req.session.data) {
