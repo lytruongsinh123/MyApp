@@ -28,12 +28,7 @@ mongoose
   .catch((err) => console.error("Failed to connect MongoDB:", err));
   mongoose.set('debug', true);
 // Middleware
-app.use(
-  cors({
-    origin: "http://localhost:3000", // Thay đổi thành domain của frontend
-    credentials: true, // Cho phép gửi cookie
-  })
-);
+app.use(cors());
 
 app.get('/',(req,res)=> {
   res.send('API IS RUNNING')
