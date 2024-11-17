@@ -9,7 +9,7 @@ function BlogList() {
 
   const fetchBlogs = async () => {
     try {
-      const response = await axios.get("https://hun-d528fjfto-hungs-projects-927307c5.vercel.app/api/home/bloglist");
+      const response = await axios.get("https://server-2uco9oplb-lytruongsinhs-projects.vercel.app/api/home/bloglist");
       setBlogs(response.data);
     } catch (error) {
       console.error("Error fetching blogs:", error);
