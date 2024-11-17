@@ -22,6 +22,7 @@ router.post("/postblog", upload.single("image"), async (req, res, next) => {
     });
     res.json(blog);
   } catch (err) {
+    console.error("Error creating blog:", err);
     res.status(400).json({ message: err.message });
   }
 });
