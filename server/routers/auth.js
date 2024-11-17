@@ -23,10 +23,10 @@ router.post("/login", async (req, res) => {
     const user = await AccountModel.findOne({ username, password });
     if (user) {
       req.session.data = user;
-      console.log(user)
-      res.json(user)
+      console.log(user);
+      res.json(user);
     } else {
-      console.log('Đăng nhập không thành công')
+      console.log("Đăng nhập không thành công");
     }
   } catch (err) {
     res.status(500).json("Lỗi Server");
@@ -46,7 +46,9 @@ router.post(
 
     try {
       const userId = req.params.userId;
-      const imagePath = req.file.location;
+      const imagePath = `${req.protocol}://${req.get("host")}/images/${
+        req.file.filename
+      }`;
 
       // Cập nhật thông tin người dùng
       const updatedAccount = await AccountModel.findByIdAndUpdate(
@@ -69,24 +71,21 @@ router.post(
   }
 );
 
-
-router.get('/check-session', (req, res) => {
+router.get("/check-session", (req, res) => {
   if (req.session.data) {
     res.json({ user: req.session.data });
   } else {
-    res.status(401).json({ message: 'No session' });
+    res.status(401).json({ message: "No session" });
   }
 });
 
-router.post('/logout', (req, res) => {
+router.post("/logout", (req, res) => {
   req.session.destroy((err) => {
     if (err) {
-      return res.status(500).json({ message: 'Logout error' });
+      return res.status(500).json({ message: "Logout error" });
     }
-    res.json({ message: 'Logout successful' }); // Trả về thông báo thay vì redirect
+    res.json({ message: "Logout successful" }); // Trả về thông báo thay vì redirect
   });
 });
 
 module.exports = router;
-
-

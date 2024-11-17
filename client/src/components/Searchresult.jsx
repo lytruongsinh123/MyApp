@@ -13,7 +13,7 @@ function SearchResult() {
     const fetchResults = async () => {
       try {
         const response = await axios.get(
-          `https://server-azure-omega.vercel.app/search?query=${query}`
+          `http://localhost:8000/search?query=${query}`
         );
         setResults(response.data);
       } catch (error) {

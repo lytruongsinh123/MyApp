@@ -14,7 +14,7 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post("https://server-azure-omega.vercel.app/login", {
+      const response = await axios.post("http://localhost:8000/login", {
         username,
         password,
         email,

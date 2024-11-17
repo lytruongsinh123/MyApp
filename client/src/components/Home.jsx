@@ -10,7 +10,7 @@ function Home() {
 
   const fetchBlogs = async () => {
     try {
-      const response = await axios.get("https://server-azure-omega.vercel.app/bloglist");
+      const response = await axios.get("http://localhost:8000/bloglist");
       // Lấy 5 blog mới nhất từ dữ liệu nhận được
       const recentBlogs = response.data.slice(0, 5);
       setBlogs(recentBlogs);

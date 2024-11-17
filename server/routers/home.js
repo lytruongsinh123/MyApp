@@ -8,7 +8,9 @@ router.get("/home", (req, res, next) => {
 
 router.post("/postblog", upload.single("image"), async (req, res, next) => {
   const { title, content, author, tags, image_author } = req.body;
-  const imagePath = req.file.location;
+  const imagePath = `${req.protocol}://${req.get("host")}/images/${
+    req.file.filename
+  }`;
   try {
     const blog = await BlogModel.create({
       tags,

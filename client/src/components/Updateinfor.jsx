@@ -40,7 +40,7 @@ function UpdateImage() {
 
     const userId = user._id; // Get the current user ID
     const response = await fetch(
-      `https://server-azure-omega.vercel.app/update-image/${userId}`,
+      `http://localhost:8000/update-image/${userId}`,
       {
         method: "POST",
         body: formData,

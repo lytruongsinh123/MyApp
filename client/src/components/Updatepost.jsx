@@ -11,7 +11,7 @@ const PostUpdate = () => {
     // Handle the update request
     const handleUpdate = async () => {
         try {
-            const response = await axios.put(`https://server-azure-omega.vercel.app/update/${id}`, {
+            const response = await axios.put(`http://localhost:8000/update/${id}`, {
                 newTitle,
                 newContent
             });

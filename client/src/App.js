@@ -32,7 +32,7 @@ const App = () => {
 
   const fetchBlogs = async () => {
     try {
-      const response = await axios.get("https://server-azure-omega.vercel.app/bloglist");
+      const response = await axios.get("http://localhost:8000/bloglist");
       setBlogs(response.data);
     } catch (error) {
       console.error("Error fetching blogs:", error);
