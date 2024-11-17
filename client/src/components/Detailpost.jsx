@@ -18,8 +18,8 @@ const DetailPost = () => {
   const fetchData = useCallback(async () => {
     try {
       const [postResponse, blogsResponse] = await Promise.all([
-        axios.get(`http://localhost:8000/api/home/detail/post/${id}`),
-        axios.get("http://localhost:8000/api/home/bloglist"),
+        axios.get(`https://hun-d528fjfto-hungs-projects-927307c5.vercel.app/api/home/detail/post/${id}`),
+        axios.get("https://hun-d528fjfto-hungs-projects-927307c5.vercel.app/api/home/bloglist"),
       ]);
 
       setPost(postResponse.data);
@@ -51,7 +51,7 @@ const DetailPost = () => {
       image: user.image,
     };
     await axios.post(
-      `http://localhost:8000/api/comments/${postId}/add-comment`,
+      `https://hun-d528fjfto-hungs-projects-927307c5.vercel.app/api/comments/${postId}/add-comment`,
       newComment
     );
     setContent("");
@@ -67,7 +67,7 @@ const DetailPost = () => {
         image: user.image,
       };
       await axios.post(
-        `http://localhost:8000/api/comments/${id}/add-reply/${commentId}`,
+        `https://hun-d528fjfto-hungs-projects-927307c5.vercel.app/api/comments/${id}/add-reply/${commentId}`,
         newReply
       );
 

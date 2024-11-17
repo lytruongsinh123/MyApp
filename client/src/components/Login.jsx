@@ -14,7 +14,7 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post("http://localhost:8000/api/auth/login", {
+      const response = await axios.post("https://hun-d528fjfto-hungs-projects-927307c5.vercel.app/api/auth/login", {
         username,
         password,
         email,

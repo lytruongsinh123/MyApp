@@ -13,7 +13,7 @@ function SearchResult() {
     const fetchResults = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:8000/api/home/search?query=${query}`
+          `https://hun-d528fjfto-hungs-projects-927307c5.vercel.app/api/home/search?query=${query}`
         );
         setResults(response.data);
       } catch (error) {

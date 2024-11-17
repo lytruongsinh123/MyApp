@@ -10,7 +10,7 @@ function Home() {
 
   const fetchBlogs = async () => {
     try {
-      const response = await axios.get("http://localhost:8000/api/home/bloglist");
+      const response = await axios.get("https://hun-d528fjfto-hungs-projects-927307c5.vercel.app/api/home/bloglist");
       // Lấy 5 blog mới nhất từ dữ liệu nhận được
       const recentBlogs = response.data.slice(0, 5);
       setBlogs(recentBlogs);

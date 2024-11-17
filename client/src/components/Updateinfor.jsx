@@ -40,7 +40,7 @@ function UpdateImage() {
 
     const userId = user._id; // Get the current user ID
     const response = await fetch(
-      `http://localhost:8000/api/auth/update-image/${userId}`,
+      `https://hun-d528fjfto-hungs-projects-927307c5.vercel.app/api/auth/update-image/${userId}`,
       {
         method: "POST",
         body: formData,

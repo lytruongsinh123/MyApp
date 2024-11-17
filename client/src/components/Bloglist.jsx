@@ -9,7 +9,7 @@ function BlogList() {
 
   const fetchBlogs = async () => {
     try {
-      const response = await axios.get("http://localhost:8000/api/home/bloglist");
+      const response = await axios.get("https://hun-d528fjfto-hungs-projects-927307c5.vercel.app/api/home/bloglist");
       setBlogs(response.data);
     } catch (error) {
       console.error("Error fetching blogs:", error);
@@ -26,7 +26,7 @@ function BlogList() {
 
   useEffect(() => {
     axios
-      .get("http://localhost:8000/api/home/top-like") // Đảm bảo URL là đúng với API bạn đã tạo trong Express
+      .get("https://hun-d528fjfto-hungs-projects-927307c5.vercel.app/api/home/top-like") // Đảm bảo URL là đúng với API bạn đã tạo trong Express
       .then((response) => {
         console.log(response.data);
         setTopPosts(response.data); // Cập nhật dữ liệu vào state

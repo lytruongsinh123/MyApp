@@ -40,7 +40,7 @@ function NewBlogForm() {
       });
 
       const response = await axios.post(
-        "http://localhost:8000/api/home/postblog",
+        "https://hun-d528fjfto-hungs-projects-927307c5.vercel.app/api/home/postblog",
         formData,
         {
           headers: {
