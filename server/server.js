@@ -28,7 +28,11 @@ mongoose
   .catch((err) => console.error("Failed to connect MongoDB:", err));
   mongoose.set('debug', true);
 // Middleware
-app.use(cors());
+app.use(cors({
+  origin: "https://my-app-nine-liart-13.vercel.app", // Thay bằng domain của client
+  methods: ["GET", "POST"], 
+  credentials: true 
+}));
 
 app.get('/',(req,res)=> {
   res.send('API IS RUNNING')
