@@ -4,9 +4,9 @@ const cors = require("cors");
 const session = require("express-session");
 const MongoStore = require("connect-mongo");
 const mongoose = require("mongoose");
-const authRoutes = require("../routers/auth");
-const homeRoutes = require("../routers/home");
-const commentRoutes = require("../routers/comment");
+const authRoutes = require("./routers/auth");
+const homeRoutes = require("./routers/home");
+const commentRoutes = require("./routers/comment");
 
 const app = express();
 const PORT = process.env.PORT || 8000;
