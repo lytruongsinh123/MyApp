@@ -28,7 +28,7 @@ function BlogList() {
     axios
     const response = await axios.get("https://server-azure-omega.vercel.app/api/home/bloglist", {
       withCredentials: true, // Đảm bảo gửi cookie
-    });
+    })
       .then((response) => {
         console.log(response.data);
         setTopPosts(response.data); // Cập nhật dữ liệu vào state
