@@ -9,7 +9,7 @@ function BlogPosted() {
   const navigate = useNavigate();
   useEffect(() => {
     axios
-      .get("https://hun-d528fjfto-hungs-projects-927307c5.vercel.app/api/home/blogposted")
+      .get("https://server-azure-omega.vercel.app/api/home/blogposted")
       .then((response) => {
         setBlogs(response.data);
         setLoading(false);
@@ -25,7 +25,7 @@ function BlogPosted() {
   const handleDelete = async (id) => {
     alert(id);
     try {
-      await axios.delete(`https://hun-d528fjfto-hungs-projects-927307c5.vercel.app/api/home/postdelete/${id}`);
+      await axios.delete(`https://server-azure-omega.vercel.app/api/home/postdelete/${id}`);
       setBlogs(blogs.filter((blog) => blog._id !== id)); // Cập nhật danh sách blogs sau khi xóa
       alert("Bài đăng đã được xóa thành công.");
     } catch (error) {

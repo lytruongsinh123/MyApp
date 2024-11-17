@@ -10,7 +10,7 @@ export const AuthProvider = ({ children }) => {
 
   const login = async (userData) => {
     try {
-      const response = await axios.post("https://hun-d528fjfto-hungs-projects-927307c5.vercel.app/api/auth/login", userData, { withCredentials: true });
+      const response = await axios.post("https://server-azure-omega.vercel.app/api/auth/login", userData, { withCredentials: true });
       setUser(response.data);
       setIsLoggedIn(true);
       setError(null);
@@ -21,7 +21,7 @@ export const AuthProvider = ({ children }) => {
 
   const register = async (userData) => {
     try {
-      await axios.post("https://hun-d528fjfto-hungs-projects-927307c5.vercel.app/api/auth/register", userData);
+      await axios.post("https://server-azure-omega.vercel.app/api/auth/register", userData);
       setIsLoggedIn(false);
       setError(null);
     } catch (err) {
@@ -31,7 +31,7 @@ export const AuthProvider = ({ children }) => {
 
   const logout = async () => {
     try {
-      await axios.post("https://hun-d528fjfto-hungs-projects-927307c5.vercel.app/api/auth/logout", {}, { withCredentials: true });
+      await axios.post("https://server-azure-omega.vercel.app/api/auth/logout", {}, { withCredentials: true });
       setIsLoggedIn(false);
       setUser(null);
     } catch (error) {
@@ -42,7 +42,7 @@ export const AuthProvider = ({ children }) => {
   useEffect(() => {
     const checkSession = async () => {
       try {
-        const response = await axios.get("https://hun-d528fjfto-hungs-projects-927307c5.vercel.app/api/auth/check-session", {
+        const response = await axios.get("https://server-azure-omega.vercel.app/api/auth/check-session", {
           withCredentials: true,
         });
         if (response.data.user) {

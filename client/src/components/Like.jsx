@@ -23,7 +23,7 @@ const Like = ({ postId, initialLikes, isLoggedIn, userId }) => {
     try {
       const response = await axios({
         method: method,
-        url: `https://hun-d528fjfto-hungs-projects-927307c5.vercel.app/api/home/${userId}/posts/${postId}/like`,
+        url: `https://server-azure-omega.vercel.app/api/home/${userId}/posts/${postId}/like`,
         data: {
           userId: userId,
           postId: postId
