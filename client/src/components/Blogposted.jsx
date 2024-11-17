@@ -9,7 +9,7 @@ function BlogPosted() {
   const navigate = useNavigate();
   useEffect(() => {
     axios
-      .get("https://server-azure-omega.vercel.app/api/home/blogposted")
+      .get("https://server-theta-tan.vercel.app/blogposted")
       .then((response) => {
         setBlogs(response.data);
         setLoading(false);
