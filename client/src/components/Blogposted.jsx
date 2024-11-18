@@ -9,7 +9,7 @@ function BlogPosted() {
   const navigate = useNavigate();
   useEffect(() => {
     axios
-      .get("https://server-umber-delta.vercel.app/blogposted")
+      .get(`${process.env.REACT_APP_API_URL}/blogposted`)
       .then((response) => {
         setBlogs(response.data);
         setLoading(false);
@@ -25,7 +25,7 @@ function BlogPosted() {
   const handleDelete = async (id) => {
     alert(id);
     try {
-      await axios.delete(`https://server-umber-delta.vercel.app/postdelete/${id}`);
+      await axios.delete(`${process.env.REACT_APP_API_URL}/postdelete/${id}`);
       setBlogs(blogs.filter((blog) => blog._id !== id)); // Cập nhật danh sách blogs sau khi xóa
       alert("Bài đăng đã được xóa thành công.");
     } catch (error) {

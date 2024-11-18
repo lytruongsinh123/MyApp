@@ -40,7 +40,7 @@ function UpdateImage() {
 
     const userId = user._id; // Get the current user ID
     const response = await fetch(
-      `https://server-umber-delta.vercel.app/update-image/${userId}`,
+      `${process.env.REACT_APP_API_URL}/update-image/${userId}`,
       {
         method: "POST",
         body: formData,

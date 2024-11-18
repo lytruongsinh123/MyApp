@@ -9,7 +9,9 @@ function BlogList() {
 
   const fetchBlogs = async () => {
     try {
-      const response = await axios.get("https://server-umber-delta.vercel.app/bloglist");
+      const response = await axios.get(
+        `${process.env.REACT_APP_API_URL}/bloglist`
+      );
       setBlogs(response.data);
     } catch (error) {
       console.error("Error fetching blogs:", error);
@@ -26,9 +28,9 @@ function BlogList() {
 
   useEffect(() => {
     axios
-    .get("https://server-umber-delta.vercel.app/top-like", {
-      withCredentials: true, // Đảm bảo gửi cookie
-    })
+      .get(`${process.env.REACT_APP_API_URL}/top-like`, {
+        withCredentials: true, // Đảm bảo gửi cookie
+      })
       .then((response) => {
         console.log(response.data);
         setTopPosts(response.data); // Cập nhật dữ liệu vào state
@@ -42,11 +44,11 @@ function BlogList() {
   const groupKeywords = ["WEB", "AI", "DEVOPS", "DATA", "AWS"];
 
   const groupIcons = {
-    WEB: "globe",    // Group "WEB" sẽ dùng icon globe
-    AI: "brain",     // Group "AI" sẽ dùng icon brain
+    WEB: "globe", // Group "WEB" sẽ dùng icon globe
+    AI: "brain", // Group "AI" sẽ dùng icon brain
     DEVOPS: "tools", // Group "DEVOPS" sẽ dùng icon tools
     DATA: "database", // Group "DATA" sẽ dùng icon database
-    AWS : "cloud"
+    AWS: "cloud",
   };
 
   const groupedBlogs = blogs.reduce((acc, blog) => {
@@ -120,18 +122,31 @@ function BlogList() {
         }}
       >
         {Object.keys(groupedBlogs).map((groupKey) => (
-          <div key={groupKey} style={{
-            width: "100%",
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "center",
-            alignItems: "center",
-            marginTop: "100px"
-          }}>
+          <div
+            key={groupKey}
+            style={{
+              width: "100%",
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "center",
+              alignItems: "center",
+              marginTop: "100px",
+            }}
+          >
             {/* Group Header with Icon */}
-            <div className="icon-group" style={{ display: "flex", alignItems: "center", marginBottom: "20px", justifyContent: "center" }}>
+            <div
+              className="icon-group"
+              style={{
+                display: "flex",
+                alignItems: "center",
+                marginBottom: "20px",
+                justifyContent: "center",
+              }}
+            >
               <i
-                className={`fas fa-${groupIcons[groupKey] || "question-circle"}`}
+                className={`fas fa-${
+                  groupIcons[groupKey] || "question-circle"
+                }`}
                 style={{
                   fontSize: "60px",
                   marginRight: "15px", // Khoảng cách giữa icon và tên nhóm
@@ -147,8 +162,21 @@ function BlogList() {
                 </div>
 
                 <div className="bloglist-content">
-                  <h2 style={{color: "var(--primary-color)", fontFamily: "monospace"}}>{blog.title}</h2>
-                  <p style={{ fontSize: "20px", color: "black" ,fontFamily: "monospace"}}>
+                  <h2
+                    style={{
+                      color: "var(--primary-color)",
+                      fontFamily: "monospace",
+                    }}
+                  >
+                    {blog.title}
+                  </h2>
+                  <p
+                    style={{
+                      fontSize: "20px",
+                      color: "black",
+                      fontFamily: "monospace",
+                    }}
+                  >
                     {blog.content.length > 200
                       ? `${blog.content.substring(0, 200)}...`
                       : blog.content}
@@ -163,7 +191,6 @@ function BlogList() {
                 >
                   Xem chi tiết
                 </button>
-                
               </div>
             ))}
           </div>

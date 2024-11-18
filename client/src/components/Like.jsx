@@ -23,7 +23,7 @@ const Like = ({ postId, initialLikes, isLoggedIn, userId }) => {
     try {
       const response = await axios({
         method: method,
-        url: `https://server-umber-delta.vercel.app/${userId}/posts/${postId}/like`,
+        url: `${process.env.REACT_APP_API_URL}/${userId}/posts/${postId}/like`,
         data: {
           userId: userId,
           postId: postId

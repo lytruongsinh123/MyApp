@@ -15,7 +15,7 @@ const Register = () => {
     console.log("Sending data:", { username, password, email });
 
     try {
-      const response = await axios.post("https://server-umber-delta.vercel.app/register", {
+      const response = await axios.post(`${process.env.REACT_APP_API_URL}/register`, {
         username,
         password,
         email,

@@ -7,10 +7,11 @@ import "bootstrap/dist/js/bootstrap.min.js";
 
 function Home() {
   const [blogs, setBlogs] = useState([]);
-
+  const [allblogs, setAllBlogs] = useState([]);
   const fetchBlogs = async () => {
     try {
-      const response = await axios.get("https://server-umber-delta.vercel.app/bloglist");
+      const response = await axios.get(`${process.env.REACT_APP_API_URL}/bloglist`);
+      setAllBlogs(response.data);
       // Lấy 5 blog mới nhất từ dữ liệu nhận được
       const recentBlogs = response.data.slice(0, 5);
       setBlogs(recentBlogs);
@@ -61,7 +62,7 @@ function Home() {
           justifyContent: blogs.length % 3 === 1 ? "start" : "center", // Căn toàn bộ lưới
         }}
       >
-        {blogs.map((blog, index) => (
+        {allblogs.map((blog, index) => (
           <Postcard
             key={index}
             image={blog.image} // Truyền ảnh cho từng blog

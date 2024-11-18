@@ -67,7 +67,7 @@ const DetailPost = () => {
         image: user.image,
       };
       await axios.post(
-        `https://server-umber-delta.vercel.app/${id}/add-reply/${commentId}`,
+        `${process.env.REACT_APP_API_URL}/${id}/add-reply/${commentId}`,
         newReply
       );
 

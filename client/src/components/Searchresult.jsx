@@ -13,7 +13,7 @@ function SearchResult() {
     const fetchResults = async () => {
       try {
         const response = await axios.get(
-          `https://server-umber-delta.vercel.app/search?query=${query}`
+          `${process.env.REACT_APP_API_URL}/search?query=${query}`
         );
         setResults(response.data);
       } catch (error) {

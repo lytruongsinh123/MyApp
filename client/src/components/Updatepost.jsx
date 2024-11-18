@@ -11,7 +11,7 @@ const PostUpdate = () => {
     // Handle the update request
     const handleUpdate = async () => {
         try {
-            const response = await axios.put(`https://server-umber-delta.vercel.app/update/${id}`, {
+            const response = await axios.put(`${process.env.REACT_APP_API_URL}/update/${id}`, {
                 newTitle,
                 newContent
             });

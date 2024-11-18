@@ -48,7 +48,7 @@ function NewBlogForm() {
       });
 
       const response = await axios.post(
-        `https://server-umber-delta.vercel.app/postblog`,
+        `${process.env.REACT_APP_API_URL}/postblog`,
         formData,
         {
           headers: {

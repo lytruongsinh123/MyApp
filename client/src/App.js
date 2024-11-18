@@ -26,13 +26,14 @@ import "./styles/update.css";
 import "./styles/button.css";
 import "./styles/loadding.css";
 
+
 const App = () => {
   const [blogs, setBlogs] = useState([]);
   const [earliestBlogs, setEarliestBlogs] = useState([]);
 
   const fetchBlogs = async () => {
     try {
-      const response = await axios.get("https://server-umber-delta.vercel.app/bloglist");
+      const response = await axios.get(`${process.env.REACT_APP_API_URL}/bloglist`);
       setBlogs(response.data);
     } catch (error) {
       console.error("Error fetching blogs:", error);

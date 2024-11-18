@@ -2,7 +2,7 @@
   "name": "client",
   "version": "0.1.0",
   "private": true,
-  "homepage": ".", 
+  "homepage": ".",
   "dependencies": {
     "@coreui/coreui": "^5.2.0",
     "@coreui/react": "^5.4.1",
