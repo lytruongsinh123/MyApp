@@ -13,7 +13,7 @@ function SearchResult() {
     const fetchResults = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:8000/search?query=${query}`
+          `https://server-umber-delta.vercel.app/search?query=${query}`
         );
         setResults(response.data);
       } catch (error) {

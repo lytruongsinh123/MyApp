@@ -18,8 +18,8 @@ const DetailPost = () => {
   const fetchData = useCallback(async () => {
     try {
       const [postResponse, blogsResponse] = await Promise.all([
-        axios.get(`http://localhost:8000/detail/post/${id}`),
-        axios.get("http://localhost:8000/bloglist"),
+        axios.get(`https://server-umber-delta.vercel.app/detail/post/${id}`),
+        axios.get("https://server-umber-delta.vercel.app/bloglist"),
       ]);
 
       setPost(postResponse.data);
@@ -51,7 +51,7 @@ const DetailPost = () => {
       image: user.image,
     };
     await axios.post(
-      `http://localhost:8000/${postId}/add-comment`,
+      `https://server-umber-delta.vercel.app/${postId}/add-comment`,
       newComment
     );
     setContent("");
@@ -67,7 +67,7 @@ const DetailPost = () => {
         image: user.image,
       };
       await axios.post(
-        `http://localhost:8000/${id}/add-reply/${commentId}`,
+        `https://server-umber-delta.vercel.app/${id}/add-reply/${commentId}`,
         newReply
       );
 

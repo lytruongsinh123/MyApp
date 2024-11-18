@@ -17,7 +17,7 @@ function NewBlogForm() {
     return <p>Loading user information...</p>;
   }
 
-  
+
   const handleImageChange = (e) => {
     setImage(e.target.files[0]);
   };
@@ -48,7 +48,7 @@ function NewBlogForm() {
       });
 
       const response = await axios.post(
-        `http://localhost:8000/postblog`,
+        `https://server-umber-delta.vercel.app/postblog`,
         formData,
         {
           headers: {

@@ -10,7 +10,7 @@ export const AuthProvider = ({ children }) => {
 
   const login = async (userData) => {
     try {
-      const response = await axios.post("http://localhost:8000/login", userData, { withCredentials: true });
+      const response = await axios.post("https://server-umber-delta.vercel.app/login", userData, { withCredentials: true });
       setUser(response.data);
       setIsLoggedIn(true);
       setError(null);
@@ -21,7 +21,7 @@ export const AuthProvider = ({ children }) => {
 
   const register = async (userData) => {
     try {
-      await axios.post("http://localhost:8000/register", userData);
+      await axios.post("https://server-umber-delta.vercel.app/register", userData);
       setIsLoggedIn(false);
       setError(null);
     } catch (err) {
@@ -31,7 +31,7 @@ export const AuthProvider = ({ children }) => {
 
   const logout = async () => {
     try {
-      await axios.post("http://localhost:8000/logout", {}, { withCredentials: true });
+      await axios.post("https://server-umber-delta.vercel.app/logout", {}, { withCredentials: true });
       setIsLoggedIn(false);
       setUser(null);
     } catch (error) {
@@ -42,7 +42,7 @@ export const AuthProvider = ({ children }) => {
   useEffect(() => {
     const checkSession = async () => {
       try {
-        const response = await axios.get("http://localhost:8000/check-session", {
+        const response = await axios.get("https://server-umber-delta.vercel.app/check-session", {
           withCredentials: true,
         });
         if (response.data.user) {

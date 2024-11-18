@@ -26,7 +26,7 @@ function BlogList() {
 
   useEffect(() => {
     axios
-    .get("http://localhost:8000/top-like", {
+    .get("https://server-umber-delta.vercel.app/top-like", {
       withCredentials: true, // Đảm bảo gửi cookie
     })
       .then((response) => {
