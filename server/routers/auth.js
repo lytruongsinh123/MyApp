@@ -44,11 +44,14 @@ router.post(
       return res.status(400).json({ error: "No image uploaded" });
     }
 
+    // Kiểm tra các trường nhập vào (optional)
+    if (!address || !phone || !jobs) {
+      return res.status(400).json({ error: "Address, phone, and jobs are required" });
+    }
+
     try {
       const userId = req.params.userId;
-      const imagePath = `${req.protocol}://${req.get("host")}/images/${
-        req.file.filename
-      }`;
+      const imagePath = req.file.path;
 
       // Cập nhật thông tin người dùng
       const updatedAccount = await AccountModel.findByIdAndUpdate(
@@ -70,6 +73,7 @@ router.post(
     }
   }
 );
+
 
 router.get("/check-session", (req, res) => {
   if (req.session.data) {
