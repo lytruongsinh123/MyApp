@@ -12,9 +12,17 @@ function NewBlogForm() {
   const [newTag, setNewTag] = useState("");
   const navigate = useNavigate();
 
+
+  if (!user) {
+    return <p>Loading user information...</p>;
+  }
+
+  
   const handleImageChange = (e) => {
     setImage(e.target.files[0]);
   };
+
+
 
   const handleTagAdd = () => {
     // kiểm tra newtag đã có giá trị và newtag chưa tồn tại trong tags
