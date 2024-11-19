@@ -10,14 +10,14 @@ function SearchBar({ onSearch }) {
 
   return (
     <div>
-      <div class="search-wrapper">
+      <div className="search-wrapper">
         <input
           type="search"
           placeholder="Search"
           value={query}
           onChange={(e) => setQuery(e.target.value)}
         />
-        <button class="search-btn" onClick={handleSearch}>
+        <button className="search-btn" onClick={handleSearch}>
           Search
         </button>
       </div>

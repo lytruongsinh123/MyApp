@@ -22,8 +22,7 @@ const Login = () => {
       console.log(response.data)
       if (response.data) {
         
-        // Gọi hàm login để cập nhật trạng thái người dùng
-        login(response.data); // Giả sử response.data.user chứa thông tin người dùng
+        login(response.data);
         navigate("/home");
       } else {
         console.error("No data in response");

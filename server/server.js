@@ -15,13 +15,10 @@ require("dotenv").config();
 // Kết nối MongoDB
 mongoose
   .connect(
-    process.env.MONGODB_URI ||
-      "mongodb+srv://23021410:Sl2jCrBm63EqopFA@cluster0.gq1kc.mongodb.net/Nodejs?retryWrites=true&w=majority&appName=Cluster0",
+    process.env.MONGODB_URI,
     {
       useNewUrlParser: true,
       useUnifiedTopology: true,
-      serverSelectionTimeoutMS: 5000, // Tăng thời gian timeout
-      socketTimeoutMS: 45000,
     }
   )
   .then(() => console.log("Connected to MongoDB"))
@@ -34,10 +31,6 @@ app.use(cors({
   credentials: true 
 }));
 
-app.get('/',(req,res)=> {
-  res.send('API IS RUNNING')
-})
-
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
@@ -49,14 +42,14 @@ app.use(
     saveUninitialized: false,
     store: MongoStore.create({
       mongoUrl:
-        process.env.MONGODB_URI ||
-        "mongodb+srv://23021410:Sl2jCrBm63EqopFA@cluster0.gq1kc.mongodb.net/Nodejs?retryWrites=true&w=majority&appName=Cluster0", // URI cho MongoDB
+        process.env.MONGODB_URI,
       collectionName: "sessions", // Tên collection lưu trữ phiên
     }),
     cookie: {
       maxAge: 180 * 60 * 1000, // Thời gian sống của cookie (180 phút)
-      secure: false, // Đặt true nếu sử dụng HTTPS
-      sameSite: "lax", // Chế độ SameSite cho cookie
+      secure: process.env.NODE_ENV === "production", // True khi production
+      sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
+      httpOnly: true,
     },
   })
 );

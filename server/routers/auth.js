@@ -23,8 +23,8 @@ router.post("/login", async (req, res) => {
     const user = await AccountModel.findOne({ username, password });
     if (user) {
       req.session.data = user;
-      console.log(user);
-      res.json(user);
+
+      res.json(req.session.data);
     } else {
       console.log("Đăng nhập không thành công");
     }
