@@ -3,7 +3,7 @@ import React, { useState, useContext } from "react";
 import { AuthContext } from "../AuthContext";
 import { useNavigate, Link } from "react-router-dom";
 import SearchBar from "./SearchBar";
-// const Header = () => {
+
 //   const { isLoggedIn, user, logout } = useContext(AuthContext);
 //   const navigate = useNavigate();
 

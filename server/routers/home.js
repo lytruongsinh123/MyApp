@@ -26,6 +26,7 @@ router.post("/postblog", upload.single("image"), async (req, res, next) => {
 });
 
 router.get('/bloglist', async (req, res) => {
+  
   console.log('Fetching blog list...');  // Log khi gọi API
   try {
     console.log('Attempting to fetch blogs...');

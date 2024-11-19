@@ -8,6 +8,12 @@ function BlogList() {
   const navigate = useNavigate();
 
   const fetchBlogs = async () => {
+    console.log(
+      "Is production environment:",
+      process.env.NODE_ENV === "production"
+    );
+    console.log("Current NODE_ENV value:", process.env.NODE_ENV);
+
     try {
       const response = await axios.get(
         `${process.env.REACT_APP_API_URL}/bloglist`

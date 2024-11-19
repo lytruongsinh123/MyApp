@@ -30,24 +30,36 @@ app.use(cors({
   methods: ["GET", "POST", 'PUT', 'DELETE'], 
   credentials: true 
 }));
-
+app.use((req, res, next) => {
+  if (req.method === "OPTIONS") {
+    return res.sendStatus(204); // Bỏ qua OPTIONS request
+  }
+  next();
+});
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
+
+// Kiểm tra giá trị NODE_ENV
+console.log("Is production environment:", process.env.NODE_ENV === "production");
+console.log("Current NODE_ENV value:", process.env.NODE_ENV);
+
 // Cấu hình express-session
+app.set('trust proxy', 1);
 app.use(
   session({
-    secret: "yourSecretKey", // Khóa bí mật để mã hóa phiên
+    secret: "yourSecretKey", 
     resave: false,
     saveUninitialized: false,
+    proxy: true,
     store: MongoStore.create({
       mongoUrl:
         process.env.MONGODB_URI,
-      collectionName: "sessions", // Tên collection lưu trữ phiên
+      collectionName: "sessions", 
     }),
     cookie: {
       maxAge: 180 * 60 * 1000, // Thời gian sống của cookie (180 phút)
-      secure: process.env.NODE_ENV === "production", // True khi production
+      secure: process.env.NODE_ENV === "production", 
       sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
       httpOnly: true,
     },
@@ -55,14 +67,14 @@ app.use(
 );
 
 // Cấu hình Static Files
-app.use("/images", express.static("public/images")); // Phục vụ hình ảnh từ thư mục public/images
+app.use("/images", express.static("public/images")); 
 
 // Định nghĩa các route với prefix
-app.use("/", authRoutes); // Tất cả routes liên quan đến xác thực
-app.use("/", homeRoutes); // Routes chính cho trang chủ
-app.use("/", commentRoutes); // Routes cho comment
+app.use("/", authRoutes); 
+app.use("/", homeRoutes); 
+app.use("/", commentRoutes); 
 
-// Khởi động server
+
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
