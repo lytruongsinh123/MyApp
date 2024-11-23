@@ -50,12 +50,25 @@ const DetailPost = () => {
       author: user.username,
       image: user.image,
     };
-    await axios.post(
-      `${process.env.REACT_APP_API_URL}/${postId}/add-comment`,
-      newComment
-    );
-    setContent("");
-    fetchData();
+    try {
+      // Optimistic update
+      setPost((prevPost) => ({
+        ...prevPost,
+        comments: [
+          { ...newComment, _id: Date.now().toString() },
+          ...prevPost.comments,
+        ],
+      }));
+      setContent("");
+
+      // Make API call to add the comment
+      await axios.post(
+        `${process.env.REACT_APP_API_URL}/${post._id}/add-comment`,
+        newComment
+      );
+    } catch (error) {
+      console.error("Error adding comment:", error);
+    }
   };
 
   const addReply = async (commentId, replyContent) => {
@@ -66,6 +79,22 @@ const DetailPost = () => {
         author: user.username,
         image: user.image,
       };
+
+      setPost((prevPost) => ({
+        ...prevPost,
+        comments: prevPost.comments.map((comment) =>
+          comment._id === commentId
+            ? {
+                ...comment,
+                replies: [
+                  { ...newReply, _id: Date.now().toString() },
+                  ...comment.replies,
+                ],
+              }
+            : comment
+        ),
+      }));
+
       await axios.post(
         `${process.env.REACT_APP_API_URL}/${id}/add-reply/${commentId}`,
         newReply
@@ -127,9 +156,15 @@ const DetailPost = () => {
             </u>
             <p style={{ textAlign: "justify" }}>{comment.content}</p>
 
-            <button className="button-reply" onClick={() => toggleReplying(comment._id)}>
-            <i className={`fas ${isReplying ? "fa-times" : "fa-reply"}`} style={{ marginRight: "8px" }} />
-            {isReplying ? "Cancel" : "Reply"}
+            <button
+              className="button-reply"
+              onClick={() => toggleReplying(comment._id)}
+            >
+              <i
+                className={`fas ${isReplying ? "fa-times" : "fa-reply"}`}
+                style={{ marginRight: "8px" }}
+              />
+              {isReplying ? "Cancel" : "Reply"}
             </button>
           </div>
         </div>
@@ -148,18 +183,20 @@ const DetailPost = () => {
                 setReplyContent("");
               }}
             >
-              <i class="bi bi-reply" style={{fontSize: "30px"}}></i>
+              <i className="bi bi-reply" style={{ fontSize: "30px" }}></i>
             </button>
           </div>
         )}
 
-        {isReplying && comment.replies && comment.replies.length > 0 && (
-          <div style={{ marginLeft: "20px", marginTop: "10px" }}>
-            {comment.replies.map((reply) => (
-              <Comment key={reply._id} comment={reply} />
-            ))}
-          </div>
-        )}
+        {isReplying &&
+          Array.isArray(comment.replies) &&
+          comment.replies.length > 0 && (
+            <div style={{ marginLeft: "20px", marginTop: "10px" }}>
+              {comment.replies.map((reply) => (
+                <Comment key={reply._id} comment={reply} />
+              ))}
+            </div>
+          )}
       </div>
     );
   };
@@ -285,7 +322,10 @@ const DetailPost = () => {
             <h1>Latest post</h1>
             <div className="early-post">
               {getEarliestBlogs().map((blog) => (
-                <div key={blog._id} style={{ width: "100%", height: "100%", margin: "20px" }}>
+                <div
+                  key={blog._id}
+                  style={{ width: "100%", height: "100%", margin: "20px" }}
+                >
                   <div className="early-post-detail">
                     <div
                       style={{
