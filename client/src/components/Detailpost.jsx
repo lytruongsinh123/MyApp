@@ -99,9 +99,6 @@ const DetailPost = () => {
         `${process.env.REACT_APP_API_URL}/${id}/add-reply/${commentId}`,
         newReply
       );
-
-      // Cập nhật lại dữ liệu mà không làm thay đổi trạng thái isReplying của các comments khác
-      fetchData();
     } catch (error) {
       console.error(
         "Error adding reply:",
