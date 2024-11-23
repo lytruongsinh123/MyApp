@@ -997,6 +997,9 @@ img {
   flex-direction: row;
   align-items: space-between;
   justify-content: space-between;
+  background-color: #242628;
+  border-radius: 10px;
+  border: 2px solid var(--primary-color);
 }
 
 .center {
@@ -1416,3 +1419,6 @@ h3 {
   font-size: 30px;
   margin-left: 80px;
 }
+
+
+

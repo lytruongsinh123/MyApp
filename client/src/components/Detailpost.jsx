@@ -127,8 +127,9 @@ const DetailPost = () => {
             </u>
             <p style={{ textAlign: "justify" }}>{comment.content}</p>
 
-            <button onClick={() => toggleReplying(comment._id)}>
-              {isReplying ? "Cancel" : "Reply"}
+            <button className="button-reply" onClick={() => toggleReplying(comment._id)}>
+            <i className={`fas ${isReplying ? "fa-times" : "fa-reply"}`} style={{ marginRight: "8px" }} />
+            {isReplying ? "Cancel" : "Reply"}
             </button>
           </div>
         </div>
@@ -147,7 +148,7 @@ const DetailPost = () => {
                 setReplyContent("");
               }}
             >
-              Reply
+              <i class="bi bi-reply" style={{fontSize: "30px"}}></i>
             </button>
           </div>
         )}
@@ -341,6 +342,14 @@ const DetailPost = () => {
             </div>
 
             <br></br>
+            <div
+              style={{
+                width: "430px",
+                height: "1px",
+                backgroundColor: "black",
+                margin: "20px",
+              }}
+            ></div>
             <h1>Tags</h1>
             <div className="tags">
               {post.tags &&
