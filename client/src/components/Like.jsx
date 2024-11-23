@@ -89,7 +89,7 @@ const LikeButton = ({ userId, postId, initialLikes, isLoggedIn }) => {
         className={`button button-like ${isLiked ? "liked" : ""}`}
         onClick={handleClick}
       >
-         <i class="fa fa-heart"></i>
+         <i className="fa fa-heart"></i>
          <span>Like</span>
       </button>
       <span>{likeCounts} Likes</span>
