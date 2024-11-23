@@ -284,10 +284,9 @@ const DetailPost = () => {
             <h1>Latest post</h1>
             <div className="early-post">
               {getEarliestBlogs().map((blog) => (
-                <div style={{ width: "100%", height: "100%", margin: "20px" }}>
+                <div key={blog._id} style={{ width: "100%", height: "100%", margin: "20px" }}>
                   <div className="early-post-detail">
                     <div
-                      key={blog._id}
                       style={{
                         display: "flex",
                         flexDirection: "row",

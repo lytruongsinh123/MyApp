@@ -40,10 +40,6 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 
-// Kiểm tra giá trị NODE_ENV
-console.log("Is production environment:", process.env.NODE_ENV === "production");
-console.log("Current NODE_ENV value:", process.env.NODE_ENV);
-
 // Cấu hình express-session
 app.set('trust proxy', 1);
 app.use(

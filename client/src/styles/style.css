@@ -1034,15 +1034,31 @@ img {
 }
 
 .post-card-content {
-  padding: 10px;
-  text-align: center;
+  position: relative;
+  width: 100%; /* Điều chỉnh tùy vào giao diện */
+  margin: 0 auto;
+  text-align: center; /* Canh giữa nút "Xem chi tiết" */
 }
+
+
+.clamp-text {
+  display: -webkit-box; /* Bật chế độ khung */
+  -webkit-line-clamp: 6; /* Giới hạn số dòng */
+  -webkit-box-orient: vertical; /* Hướng dọc */
+  overflow: hidden; /* Ẩn phần dư */
+  text-overflow: ellipsis; /* Thêm dấu "..." vào cuối */
+}
+
+
 
 .post-card-content p,
 h3 {
   color: black;
   text-align: justify;
-  padding: 10px;
+  padding-left: 10px;
+  padding-right: 10px;
+  margin-top: 10px;
+  margin-bottom: 20px;
 }
 
 .post-card-content h3 {
@@ -1393,4 +1409,10 @@ h3 {
 .dropdown:hover .dropdown-content {
   max-height: 500px; /* Set a high enough max-height to display all items */
   opacity: 1; /* Fade in */
+}
+
+
+.label .name {
+  font-size: 30px;
+  margin-left: 80px;
 }

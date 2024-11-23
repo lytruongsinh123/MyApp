@@ -1,90 +1,9 @@
-// Header.js
+
 import React, { useState, useContext } from "react";
 import { AuthContext } from "../AuthContext";
 import { useNavigate, Link } from "react-router-dom";
 import SearchBar from "./SearchBar";
 
-//   const { isLoggedIn, user, logout } = useContext(AuthContext);
-//   const navigate = useNavigate();
-
-//   return (
-//     <header>
-//       <div className="navbar">
-//         <div className="menu">
-//           <div className="blog" onClick={() => navigate("/blog")}>
-//             Bài viết
-//           </div>
-//           <div className="postblog" onClick={() => navigate("/postblog")}>
-//             Đăng bài
-//           </div>
-//           <div className="profile" onClick={() => navigate("/profile")}>
-//             Thông tin
-//           </div>
-//           <div className="home" onClick={() => navigate("/home")}>
-//             Trang chủ
-//           </div>
-//         </div>
-//         <div className="account">
-//           <div className="search">Search</div>
-//           {!isLoggedIn ? (
-//             <div className="login-buttons">
-//               <button onClick={() => navigate("/login")}>Đăng nhập</button>
-//               <button onClick={() => navigate("/register")}>Đăng ký</button>
-//             </div>
-//           ) : (
-//             <div className="auth">
-//               <div className="dropdown">
-//                 <button
-//                   className="btn btn-secondary dropdown-toggle"
-//                   type="button"
-//                   id="dropdownMenuButton1"
-//                   data-bs-toggle="dropdown"
-//                   aria-expanded="false"
-//                 >
-//                   Dropdown button
-//                 </button>
-//                 <ul
-//                   className="dropdown-menu"
-//                   aria-labelledby="dropdownMenuButton1"
-//                 >
-//                   <li>
-//                     <Link className="dropdown-item" to="/profile">
-//                       Thông tin cá nhân
-//                     </Link>
-//                   </li>
-//                   <li>
-//                     <Link className="dropdown-item" to="/blogposted">
-//                       Bài viết đã đăng
-//                     </Link>
-//                   </li>
-//                   <li>
-//                     <Link className="dropdown-item" to="/updateinfor">
-//                       Cập nhật thông tin
-//                     </Link>
-//                   </li>
-//                 </ul>
-//               </div>
-//               <div className="name-account">
-//                 {user ? user.username : "User"}
-//               </div>
-//               <div className="avatar-account">
-//                 {user && user.image ? ( // Kiểm tra nếu có avatar
-//                   <img src={user.image} alt=""/> // Hiển thị avatar
-//                 ) : (
-//                   <i
-//                     className="bi bi-person-circle"
-//                     style={{ fontSize: "60px" }}
-//                   ></i>
-//                 )}
-//               </div>
-//               <button onClick={logout}>Đăng xuất</button>
-//             </div>
-//           )}
-//         </div>
-//       </div>
-//     </header>
-//   );
-// };
 const Header = () => {
   const { isLoggedIn, user, logout } = useContext(AuthContext);
   const navigate = useNavigate();
@@ -105,8 +24,11 @@ const Header = () => {
     <header>
       <div className="navbar">
         <div className="label">
+          <div className="name">
+            Google Developer
+          </div>
           <div className="branch">
-            <h1>Hung</h1>
+            <h1><i className="fa-solid fa-code" style={{fontSize: "50px", color: "var(--primary-color)"}}></i></h1>
           </div>
           <div className="search1">
             <SearchBar onSearch={handleSearch} /> {/* Thêm SearchBar ở đây */}

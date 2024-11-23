@@ -190,6 +190,31 @@ router.put("/:userid/posts/:postid/like", async (req, res) => {
   }
 });
 
+
+router.get('/:userid/posts/:postid/liked', async (req, res) => {
+  try {
+    // Tìm bài viết theo postId
+    const post = await BlogModel.findById(req.params.postid);
+    if (!post) {
+      return res.status(404).json({ message: "Post not found" });
+    }
+
+    // Kiểm tra xem userId có trong people_likes của bài viết hay không
+    const isLiked = post.people_likes.includes(req.params.userid);
+
+    // Trả về trạng thái liked (true hoặc false)
+    res.json({
+      isLiked,
+      likesCount: post.people_likes.length, // Trả về số lượng likes
+    });
+  } catch (error) {
+    console.error("Lỗi khi kiểm tra trạng thái like:", error);
+    res.status(500).json({ message: "Server error" });
+  }
+});
+
+
+
 router.get("/top-like", async (req, res) => {
   try {
     const topposts = await BlogModel.find()

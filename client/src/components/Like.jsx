@@ -1,70 +1,100 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 
-const Like = ({ postId, initialLikes, isLoggedIn, userId }) => {
-  const [likesCount, setLikesCount] = useState(initialLikes); // Số lượng like ban đầu
-  const [isLiked, setIsLiked] = useState(false);
-  
+const LikeButton = ({ userId, postId, initialLikes, isLoggedIn }) => {
+  const [isLiked, setIsLiked] = useState(false); // Trạng thái like của người dùng
+  const [likeCounts, setLikesCount] = useState(initialLikes); // Số lượt like ban đầu
+
   useEffect(() => {
-    setIsLiked(false);
-  }, [initialLikes, userId]);
+    const checkLikeStatus = async () => {
+      if (!isLoggedIn) return;
 
-  console.log(isLiked)
+      try {
+        const response = await axios.get(
+          `${process.env.REACT_APP_API_URL}/${userId}/posts/${postId}/liked`
+        );
+        setIsLiked(response.data.isLiked); // Cập nhật trạng thái liked
+        setLikesCount(response.data.likesCount); // Cập nhật số lượt likes
+      } catch (error) {
+        console.error("Lỗi khi lấy trạng thái like:", error);
+      }
+    };
 
-  const handleLike = async () => {
+    checkLikeStatus();
+  }, [userId, postId, isLoggedIn]); // Giám sát userId, postId, và trạng thái đăng nhập
+
+  // Hàm xử lý khi người dùng nhấn vào nút Like
+  const handleClick = async () => {
     if (!isLoggedIn) {
       alert("Bạn chưa đăng nhập");
       return;
     }
-    setIsLiked(!isLiked);
-    setLikesCount((prevCount) => prevCount + (isLiked ? -1 : 1));
-    const method = isLiked ? "PUT" : "POST";
-    
+
+    if (!isLiked) {
+      await handleLike(); // Gọi hàm handleLike khi người dùng thích
+    } else {
+      await handleDislike(); // Gọi hàm handleDislike khi người dùng bỏ thích
+    }
+  };
+
+  // Hàm xử lý khi người dùng thích bài viết
+  const handleLike = async () => {
     try {
-      const response = await axios({
-        method: method,
-        url: `${process.env.REACT_APP_API_URL}/${userId}/posts/${postId}/like`,
-        data: {
-          userId: userId,
-          postId: postId
-        },
-      });
+      const response = await axios.post(
+        `${process.env.REACT_APP_API_URL}/${userId}/posts/${postId}/like`
+      );
 
-      // Xử lý response nếu cần thiết
       if (response.status === 200) {
-        // Nếu phản hồi thành công, có thể cần xử lý thêm dữ liệu ở đây
         console.log("Like action success:", response.data);
-        // Ví dụ: bạn có thể lấy lại số lượng like từ server nếu muốn đồng bộ hóa lại
-        // setLikesCount(response.data.likesCount);
+        setIsLiked(true); // Cập nhật trạng thái liked
+        setLikesCount(response.data.likes); // Cập nhật số lượt likes từ server
       }
-
     } catch (error) {
-      if (error.response) {
-        // Lỗi từ phản hồi của server
-        console.error("Lỗi khi like bài viết:", error.response.data);
-        console.error("Mã lỗi HTTP:", error.response.status);
-        console.error("Header của phản hồi:", error.response.headers);
-      } else if (error.request) {
-        // Không nhận được phản hồi từ server
-        console.error("Không nhận được phản hồi từ server:", error.request);
-      } else {
-        // Lỗi trong việc thiết lập yêu cầu
-        console.error("Lỗi khi gửi yêu cầu:", error.message);
+      handleError(error, "like");
+    }
+  };
+
+  // Hàm xử lý khi người dùng bỏ thích bài viết
+  const handleDislike = async () => {
+    try {
+      const response = await axios.put(
+        `${process.env.REACT_APP_API_URL}/${userId}/posts/${postId}/like`
+      );
+
+      if (response.status === 200) {
+        console.log("Dislike action success:", response.data);
+        setIsLiked(false); // Cập nhật trạng thái liked
+        setLikesCount(response.data.likes); // Cập nhật số lượt likes từ server
       }
-      // Quay lại số lượng like trước khi lỗi xảy ra
-      setLikesCount((prevCount) => prevCount - (isLiked ? -1 : 1));
+    } catch (error) {
+      handleError(error, "dislike");
+    }
+  };
+
+  // Hàm xử lý lỗi từ API
+  const handleError = (error, actionType) => {
+    if (error.response) {
+      console.error(`Lỗi khi ${actionType} bài viết:`, error.response.data);
+      console.error("Mã lỗi HTTP:", error.response.status);
+    } else if (error.request) {
+      console.error(`Không nhận được phản hồi từ server khi ${actionType}:`, error.request);
+    } else {
+      console.error(`Lỗi khi gửi yêu cầu ${actionType}:`, error.message);
     }
   };
 
   return (
-    <div style={{display: "flex", flexDirection: "row"}}>
-      <div style={{display: "flex", alignItems: "center", padding: "10px"}}>{likesCount} Likes</div> 
-      <button className="button button-like" onClick={handleLike}>
-        <i className="fa fa-heart"></i>
-        <span>Like</span>
+    <div style={{ display: "flex", alignItems: "center", gap: "10px", flexDirection: "column" }}>
+      <button
+        className={`button button-like ${isLiked ? "liked" : ""}`}
+        onClick={handleClick}
+      >
+         <i class="fa fa-heart"></i>
+         <span>Like</span>
       </button>
+      <span>{likeCounts} Likes</span>
     </div>
   );
 };
 
-export default Like;
+export default LikeButton;
