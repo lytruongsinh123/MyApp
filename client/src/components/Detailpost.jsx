@@ -79,22 +79,21 @@ const DetailPost = () => {
         author: user.username,
         image: user.image,
       };
-
+  
       setPost((prevPost) => ({
         ...prevPost,
         comments: prevPost.comments.map((comment) =>
           comment._id === commentId
             ? {
                 ...comment,
-                replies: [
-                  { ...newReply, _id: Date.now().toString() },
-                  ...comment.replies,
-                ],
-              }
+                replies: Array.isArray(comment.replies)
+                  ? [{ ...newReply, _id: Date.now().toString() }, ...comment.replies]
+                  : [{ ...newReply, _id: Date.now().toString() }] // Initialize replies as an array if not already
+            }
             : comment
         ),
       }));
-
+  
       await axios.post(
         `${process.env.REACT_APP_API_URL}/${id}/add-reply/${commentId}`,
         newReply

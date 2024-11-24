@@ -1,5 +1,6 @@
 const express = require("express");
 const BlogModel = require("../models/blog.js");
+const Comment = require("../models/comment.js")
 const upload = require("../config/multer.js");
 const router = express.Router();
 router.get("/home", (req, res, next) => {
@@ -126,6 +127,28 @@ router.get("/detail/post/:id", async (req, res) => {
     res.status(500).json({ message: "Error retrieving post", error: error });
   }
 });
+
+
+router.get("/comments/:postId", async (req, res) => {
+  const { postId } = req.params;
+
+  try {
+    // Kiểm tra xem bài viết có tồn tại không (tuỳ thuộc vào logic của bạn)
+    const post = await BlogModel.findById(postId);
+    if (!post) {
+      return res.status(404).json({ error: "Post not found" });
+    }
+
+    // Lấy danh sách comments liên kết với bài viết
+    const comments = await Comment.find({ postId })
+
+    res.status(200).json(comments);
+  } catch (error) {
+    console.error("Error fetching comments:", error);
+    res.status(500).json({ error: "Server error" });
+  }
+});
+
 
 router.get("/search", async (req, res) => {
   try {
