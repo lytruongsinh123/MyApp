@@ -15,23 +15,32 @@ const DetailPost = () => {
   const { isLoggedIn, user } = useContext(AuthContext);
 
   // Fetch tất cả bài viết để lấy 5 bài viết sớm nhất
-  const fetchData = useCallback(async () => {
+  const fetchPostData = useCallback(async () => {
     try {
-      const [postResponse, blogsResponse] = await Promise.all([
-        axios.get(`${process.env.REACT_APP_API_URL}/detail/post/${id}`),
-        axios.get(`${process.env.REACT_APP_API_URL}/bloglist`),
-      ]);
-
+      const postResponse = await axios.get(
+        `${process.env.REACT_APP_API_URL}/detail/post/${id}`
+      );
       setPost(postResponse.data);
+    } catch (error) {
+      console.error("Error fetching post data:", error);
+    }
+  }, [id]);
+
+  const fetchBlogsData = useCallback(async () => {
+    try {
+      const blogsResponse = await axios.get(
+        `${process.env.REACT_APP_API_URL}/bloglist`
+      );
       setBlogs(blogsResponse.data);
     } catch (error) {
-      console.error("Error fetching data:", error);
+      console.error("Error fetching blog data:", error);
     }
-  }, [id]); // Phụ thuộc vào `id`
+  }, []);
 
   useEffect(() => {
-    fetchData();
-  }, [fetchData]);
+    fetchPostData();
+    fetchBlogsData();
+  }, [fetchPostData, fetchBlogsData]);
 
   // Lấy 5 bài viết sớm nhất
   const getEarliestBlogs = () => {
@@ -43,69 +52,99 @@ const DetailPost = () => {
     return sortedBlogs.slice(0, 5);
   };
 
-  const addComment = async (postId) => {
-    const newComment = {
-      postId,
-      content,
-      author: user.username,
-      image: user.image,
-    };
-    try {
-      // Optimistic update
-      setPost((prevPost) => ({
-        ...prevPost,
-        comments: [
-          { ...newComment, _id: Date.now().toString() },
-          ...prevPost.comments,
-        ],
-      }));
-      setContent("");
-
-      // Make API call to add the comment
-      await axios.post(
-        `${process.env.REACT_APP_API_URL}/${post._id}/add-comment`,
-        newComment
-      );
-    } catch (error) {
-      console.error("Error adding comment:", error);
-    }
-  };
-
-  const addReply = async (commentId, replyContent) => {
-    try {
-      const newReply = {
-        commentId,
-        content: replyContent,
-        author: user.username,
-        image: user.image,
+  const addComment = useCallback(
+    async (postId) => {
+      const newComment = {
+        postId,
+        content,
+        author: {
+          _id: user._id, // Include the author data
+          username: user.username,
+          image: user.image,
+        },
       };
-  
-      setPost((prevPost) => ({
-        ...prevPost,
-        comments: prevPost.comments.map((comment) =>
-          comment._id === commentId
-            ? {
-                ...comment,
-                replies: Array.isArray(comment.replies)
-                  ? [{ ...newReply, _id: Date.now().toString() }, ...comment.replies]
-                  : [{ ...newReply, _id: Date.now().toString() }] // Initialize replies as an array if not already
-            }
-            : comment
-        ),
-      }));
-  
-      await axios.post(
-        `${process.env.REACT_APP_API_URL}/${id}/add-reply/${commentId}`,
-        newReply
-      );
-    } catch (error) {
-      console.error(
-        "Error adding reply:",
-        error.response ? error.response.data : error.message
-      );
-    }
-  };
 
+      try {
+        await axios.post(
+          `${process.env.REACT_APP_API_URL}/${postId}/add-comment`,
+          newComment
+        );
+
+        setPost((prevPost) => ({
+          ...prevPost,
+          comments: prevPost.comments.concat(newComment), // Sử dụng .concat thay vì spread
+        }));
+
+        setContent(""); // Reset content after posting
+      } catch (error) {
+        console.error("Error adding comment:", error);
+      }
+    },
+    [setPost, user, content] // Dependencies: setPost, user, and content
+  );
+
+
+
+  const updateNestedReplies = useCallback((comments, commentId, newReply) => {
+    return comments.map((comment) => {
+      if (comment._id === commentId) {
+        return {
+          ...comment,
+          replies: [...(comment.replies || []), newReply],
+        };
+      }
+  
+      if (Array.isArray(comment.replies)) {
+        return {
+          ...comment,
+          replies: updateNestedReplies(comment.replies, commentId, newReply),
+        };
+      }
+  
+      return comment;
+    });
+  }, []); // Nếu nó không phụ thuộc vào bất kỳ state nào
+  
+
+  
+
+
+  const addReply = useCallback(
+    async (commentId, replyContent) => {
+      try {
+        const newReply = {
+          commentId,
+          content: replyContent,
+          author: {
+            _id: user._id,
+            username: user.username,
+            image: user.image,
+          },
+          replies: [],
+        };
+  
+        // Gửi yêu cầu lên server
+        await axios.post(
+          `${process.env.REACT_APP_API_URL}/${id}/add-reply/${commentId}`,
+          newReply
+        );
+  
+        // Cập nhật cục bộ
+        setPost((prevPost) => ({
+          ...prevPost,
+          comments: updateNestedReplies(prevPost.comments, commentId, newReply),
+        }));
+      } catch (error) {
+        console.error(
+          "Error adding reply:",
+          error.response ? error.response.data : error.message
+        );
+      }
+    },
+    [setPost, user, id, updateNestedReplies] // Thêm updateNestedReplies vào đây
+  );
+  
+  
   const toggleReplying = (commentId) => {
     setIsReplyingMap((prev) => ({
       ...prev,
@@ -114,7 +153,7 @@ const DetailPost = () => {
   };
 
   // Component Comment với trạng thái reply riêng cho từng comment
-  const Comment = ({ comment }) => {
+  const Comment = React.memo(({ comment }) => {
     const [replyContent, setReplyContent] = useState("");
     const isReplying = isReplyingMap[comment._id] || false;
 
@@ -136,8 +175,8 @@ const DetailPost = () => {
           }}
         >
           <div className="comment-image">
-            {comment.image ? (
-              <img src={comment.image} alt="" />
+            {comment.author.image ? (
+              <img src={comment.author.image} alt="" />
             ) : (
               <img
                 src="/images/360_F_124656969_x3y8YVzvrqFZyv3YLWNo6PJaC88SYxqM.jpg"
@@ -148,7 +187,7 @@ const DetailPost = () => {
 
           <div className="content-comment">
             <u style={{ color: "var(--primary-color)" }}>
-              <strong>{comment.author}</strong>
+              <strong>{comment.author.username}</strong>
             </u>
             <p style={{ textAlign: "justify" }}>{comment.content}</p>
 
@@ -184,18 +223,16 @@ const DetailPost = () => {
           </div>
         )}
 
-        {isReplying &&
-          Array.isArray(comment.replies) &&
-          comment.replies.length > 0 && (
-            <div style={{ marginLeft: "20px", marginTop: "10px" }}>
-              {comment.replies.map((reply) => (
-                <Comment key={reply._id} comment={reply} />
-              ))}
-            </div>
-          )}
+        {isReplying && comment.replies && comment.replies.length > 0 && (
+          <div style={{ marginLeft: "20px", marginTop: "10px" }}>
+            {comment.replies.map((reply) => (
+              <Comment key={reply._id} comment={reply} />
+            ))}
+          </div>
+        )}
       </div>
     );
-  };
+  });
 
   const CommentList = ({ comments }) => (
     <div>

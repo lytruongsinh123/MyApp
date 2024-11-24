@@ -7,8 +7,8 @@ const BlogModel = require("../models/blog.js");
 router.post("/:postId/add-comment", async (req, res) => {
   try {
     const { postId } = req.params; // Truy xuất postId trực tiếp từ req.params
-    const { author, content, image } = req.body;
-    const newComment = await Comment.create({ postId, author, content, image });
+    const { author, content } = req.body;
+    const newComment = await Comment.create({ postId, author, content });
     // Cập nhật bài viết để thêm comment mới vào trường comments
     await BlogModel.findByIdAndUpdate(
       postId,
@@ -26,8 +26,7 @@ router.post("/:postId/add-reply/:commentId", async (req, res) => {
   try {
     const commentId = req.params.commentId;
     const postId  = req.params.postId;
-    const { content, author, image } = req.body;
-    console.log(commentId)
+    const { content, author } = req.body;
     // Tìm comment cha và thêm reply vào mảng replies của nó
     const parentComment = await Comment.findById(commentId);
     if (!parentComment) {
@@ -35,7 +34,6 @@ router.post("/:postId/add-reply/:commentId", async (req, res) => {
     }
 
     const newReply = await Comment.create({
-      image,
       content,
       author,
       postId : postId

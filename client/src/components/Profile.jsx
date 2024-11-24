@@ -1,6 +1,6 @@
 import React from "react";
 
-const Profile = ({ post }) => {
+const Profile =  React.memo(({ post }) => {
   return (
     <div className="card1">
       <div className="card1_img">
@@ -29,6 +29,6 @@ const Profile = ({ post }) => {
       <button>Contact</button>
     </div>
   );
-};
+});
 
 export default Profile;

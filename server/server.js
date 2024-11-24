@@ -26,7 +26,7 @@ mongoose
   mongoose.set('debug', true);
 // Middleware
 app.use(cors({
-  origin: ["https://my-app-nine-liart-13.vercel.app", "http://localhost:3000"],
+  origin: ["https://client-sigma-beryl.vercel.app", "http://localhost:3000"],
   methods: ["GET", "POST", 'PUT', 'DELETE'], 
   credentials: true 
 }));

@@ -11,8 +11,8 @@ const CommentSchema = new Schema(
       required: false,
     },
     author: {
-      type: String,
-      required: false,
+      type: Schema.Types.ObjectId,
+      ref: "account"
     },
     content: {
       type: String,
@@ -22,10 +22,7 @@ const CommentSchema = new Schema(
       type: Date,
       default: Date.now,
     },
-    image: {
-      type: String,
-      require: false,
-    },
+    
     replies: [
       {
         type: Schema.Types.ObjectId,

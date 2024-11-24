@@ -70,7 +70,6 @@ router.delete("/postdelete/:id", async (req, res, next) => {
 
 router.put("/update/:id", async (req, res) => {
   const { newTitle, newContent } = req.body; // Lấy tiêu đề và nội dung mới từ request body
-  console.log(newTitle, newContent);
   try {
     // Cập nhật bài viết theo ID
     const updatedBlog = await BlogModel.findByIdAndUpdate(
@@ -97,26 +96,47 @@ router.get("/detail/post/:id", async (req, res) => {
   // Thêm req và res vào tham số hàm
   try {
     const blog = await BlogModel.findById(req.params.id)
-      .populate("author") // Populate thông tin tác giả
-      .populate("author") // Populate thông tin tác giả
+      .populate("author") 
       .populate({
-        path: "comments",
-        populate: {
-          path: "replies",
-          populate: {
-            path: "replies",
-            populate: {
-              path: "replies",
-              populate: {
-                path: "replies",
-                populate: {
-                  path: "replies",
-                },
-              },
-            },
+        path: "comments", // Populate comments cấp 1
+        populate: [
+          {
+            path: "author", // Populate thông tin của author comment cấp 1
+            select: "username image", 
           },
-        },
-      }) // Populate các comment
+          {
+            path: "replies", // Populate replies cấp 2
+            populate: [
+              {
+                path: "author", // Populate author của replies cấp 2
+                select: "username image",
+              },
+              {
+                path: "replies", // Populate replies cấp 3
+                populate: [
+                  {
+                    path: "author", // Populate author của replies cấp 3
+                    select: "username image",
+                  },
+                  {
+                    path: "replies",// Populate author của replies cấp 4
+                    populate: [
+                      {
+                        path: "author", // Populate author của replies cấp 4
+                        select: "username image",
+                      },
+                      {
+                        path: "replies", 
+                      },
+                    ], 
+                  },
+                ],
+              },
+            ],
+          },
+        ],
+      })
+      
       .exec();
     if (!blog) {
       return res.status(404).json({ message: "Post not found" });
