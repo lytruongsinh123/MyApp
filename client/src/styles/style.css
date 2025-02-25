@@ -1323,7 +1323,7 @@ h3 {
   height: 40px;
   align-items: center;
   justify-content: center;
-
+  cursor: pointer;
   position: relative; /* Đảm bảo mỗi item có thể chứa hiệu ứng */
   overflow: hidden; /* Ẩn hiệu ứng ngoài vùng chứa */
 }

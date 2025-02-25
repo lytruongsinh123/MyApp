@@ -20,7 +20,9 @@ import Blogposted from "./components/Blogposted";
 import Updatepost from "./components/Updatepost";
 import Detailpost from "./components/Detailpost";
 import SearchResult from "./components/Searchresult";
+import Contact from "./components/Contact";
 import Porfolio from "./components/Portfolio";
+import Introduction from "./components/Intro";
 import { AuthProvider } from "./AuthContext";
 
 import "./styles/style.css";
@@ -28,6 +30,7 @@ import "./styles/porfolio.css";
 import "./styles/update.css";
 import "./styles/button.css";
 import "./styles/loadding.css";
+import "./styles/intro.css";
 
 const App = () => {
   const [blogs, setBlogs] = useState([]);
@@ -93,6 +96,7 @@ const RoutesWithLoading = ({ posts }) => {
   return (
 
       <Routes>
+        <Route path="/" element={<Introduction/>} />
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
         <Route path="/home" element={<Home posts={posts} />} />
@@ -104,6 +108,7 @@ const RoutesWithLoading = ({ posts }) => {
         <Route path="/detailpost/:id" element={<Detailpost />} />
         <Route path="/search" element={<SearchResult />} />
         <Route path="/portfolio" element={<Porfolio />} />
+        <Route path="/contact" element={<Contact />} />
       </Routes>
 
   );

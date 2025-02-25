@@ -25,11 +25,15 @@ mongoose
   .catch((err) => console.error("Failed to connect MongoDB:", err));
   mongoose.set('debug', true);
 // Middleware
+
+
 app.use(cors({
   origin: ["https://client-sigma-beryl.vercel.app", "http://localhost:3000"],
   methods: ["GET", "POST", 'PUT', 'DELETE'], 
   credentials: true 
 }));
+
+
 app.use((req, res, next) => {
   if (req.method === "OPTIONS") {
     return res.sendStatus(204); // Bỏ qua OPTIONS request

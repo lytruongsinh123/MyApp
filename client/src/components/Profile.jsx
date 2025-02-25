@@ -1,6 +1,20 @@
 import React from "react";
-
+import { useNavigate  } from "react-router-dom";
 const Profile =  React.memo(({ post }) => {
+  const navigate = useNavigate();
+  const handleContact = () => {
+    navigate("/contact", {
+      state: {
+        user: post.author.username,
+        jobs: post.author.jobs,
+        phone : post.author.phone,
+        address: post.author.address,
+        email : post.author.email,
+        image : post.author.image
+      },
+    });
+  }
+
   return (
     <div className="card1">
       <div className="card1_img">
@@ -26,7 +40,7 @@ const Profile =  React.memo(({ post }) => {
           <i className="bi bi-youtube"></i>
         </a>
       </div>
-      <button>Contact</button>
+      <button onClick={handleContact}>Contact</button>
     </div>
   );
 });
